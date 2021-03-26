@@ -17,3 +17,8 @@ const f = async (url, method = 'get', token = null, data = []) => {
 
     return await fetch(`${host}/${url}`, options).then(res => res.json());
 };
+
+
+import {go} from './components/Catalog.js';
+
+go();
