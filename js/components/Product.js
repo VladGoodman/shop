@@ -1,8 +1,30 @@
 export default class Product extends  HTMLElement{
-    connectedCallback(){
-        const div = document.createElement('div');
-        div.innerHTML = `${this.dataset.name} - ${this.dataset.price}`;
-        this.innerHTML = div.innerHTML;
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({mode: 'open'});
+    }
+
+     connectedCallback(){
+        this.shadow.innerHTML = this.getHtml();
+        this.shadow.append(this.getStyle());
+    }
+
+    getHtml(){
+        return `
+            <div class="h1">${this.dataset.name} - ${this.dataset.price}</div>
+        `;
+    }
+
+    getStyle(){
+        const  style = document.createElement('style');
+        style.innerHTML = `
+            div{
+                color: red;
+                    border: 1px solid black;
+
+            }
+        `;
+        return style;
     }
 
 }

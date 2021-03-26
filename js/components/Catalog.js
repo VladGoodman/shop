@@ -1,8 +1,15 @@
 import {f} from '../main.js';
 export default class Catalog extends  HTMLElement{
+
+    constructor(){
+        super();
+        this.shadow = this.attachShadow({mode: 'open'});
+    }
+
     async connectedCallback(){
        const div = await this.getHtml();
-       this.innerHTML = div.innerHTML;
+       this.shadow.innerHTML = div.innerHTML;
+        this.shadow.append(this.getStyle());
     }
 
     async getHtml(){
@@ -10,9 +17,10 @@ export default class Catalog extends  HTMLElement{
         const div = document.createElement('div');
         products.forEach(product => {
             let item = document.createElement('shop-product');
+            item.dataset.id = product.id;
             item.dataset.name = product.name;
+            item.dataset.description = product.description;
             item.dataset.price = product.price;
-            console.log(item);
             //
             // let item = document.createElement('div');
             // item.innerHTML = `${product.name} - ${product.price}`;
@@ -23,6 +31,18 @@ export default class Catalog extends  HTMLElement{
 
     async getProducts(){
         return await  f('products');
+    }
+
+    getStyle(){
+        const  style = document.createElement('style');
+        style.innerHTML = `
+                :host{
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                }
+        `;
+        return style;
     }
 }
 
