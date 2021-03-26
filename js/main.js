@@ -1,4 +1,7 @@
+import Catalog from './components/Catalog.js';
+import Product from "./components/Product.js";
 const host = 'http://dpaggsfj-m1.wsr.ru/api';
+
 const f = async (url, method = 'get', token = null, data = []) => {
     const options = {
         method: method.toUpperCase(),
@@ -18,7 +21,6 @@ const f = async (url, method = 'get', token = null, data = []) => {
     return await fetch(`${host}/${url}`, options).then(res => res.json());
 };
 
-
-import {go} from './components/Catalog.js';
-
-go();
+customElements.define('shop-product', Product);
+customElements.define('shop-catalog', Catalog);
+export {f};
